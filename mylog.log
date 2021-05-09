@@ -1,0 +1,12 @@
+What is in a collaborate stdClass Object
+(
+    [id] => 1
+    [course] => 2
+    [name] => new collaborate
+    [intro] => <p dir="ltr" style="text-align: left;"><img src="@@PLUGINFILE@@/keykaps_type.jpg" alt="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna ali" class="img-fluid atto_image_button_text-bottom" width="400" height="231"><br></p><p dir="ltr" style="text-align: left;">At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. <br></p>
+    [introformat] => 1
+    [title] => New Collaborate Activity
+    [timecreated] => 1620579643
+    [timemodified] => 1620579871
+    [grade] => 100
+)

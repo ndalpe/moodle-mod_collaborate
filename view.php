@@ -52,6 +52,9 @@ $PAGE->set_url('/mod/collaborate/view.php', array('id' => $cm->id));
 
 require_login($course, true, $cm);
 
+// Output message in text file.
+// \mod_collaborate\local\debugging::logit("What is in a collaborate ", $collaborate);
+
 $PAGE->set_title(format_string($collaborate->name));
 $PAGE->set_heading(format_string($course->fullname));
 

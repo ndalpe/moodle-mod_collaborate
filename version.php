@@ -27,7 +27,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_collaborate';
-$plugin->version = 2020082701;
-$plugin->release = 'v1.1';
+$plugin->version = 2021050900;
+$plugin->release = 'v0.1';
 $plugin->requires = 2020060900;
 $plugin->maturity = MATURITY_BETA;
