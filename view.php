@@ -58,6 +58,10 @@ require_login($course, true, $cm);
 $PAGE->set_title(format_string($collaborate->name));
 $PAGE->set_heading(format_string($course->fullname));
 
+// Let's consider the activity "viewed" at this point.
+$completion = new completion_info($course);
+$completion->set_module_viewed($cm);
+
 // Check for intro page content.
 if (!$collaborate->intro) {
     $collaborate->intro = '';
