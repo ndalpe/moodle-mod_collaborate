@@ -49,3 +49,7 @@ $string['title'] = 'Activity Title: ';
 $string['title_help'] = 'Please, input the activity title help text here.';
 
 $string['pageviewed'] = 'Module page viewed.';
+
+// Mod form specific collaborate settings.
+$string['title'] = 'Activity Title: ';
+$string['texteditor'] = 'Instructions {$a}';
