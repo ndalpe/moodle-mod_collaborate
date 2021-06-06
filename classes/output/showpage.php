@@ -30,6 +30,7 @@ use renderable;
 use renderer_base;
 use templatable;
 use stdClass;
+use context_module;
 
 /**
  * collaborate: Create a new view page renderable object
@@ -39,16 +40,19 @@ use stdClass;
  * @copyright  2020 Richard Jones <richardnz@outlook.com>
  */
 
-class view implements renderable, templatable {
+class showpage implements renderable, templatable {
 
     protected $collaborate;
     protected $id;
+    protected $context;
 
-    public function __construct($collaborate, $id) {
-
+    public function __construct($collaborate, $cm, $page) {
         $this->collaborate = $collaborate;
-        $this->id = $id;
+        $this->cm = $cm;
+        $this->page = $page;
+        $this->context = \context_module::instance($this->cm->id);
     }
+
     /**
      * Export this data so it can be used as the context for a mustache template.
      *
@@ -59,16 +63,34 @@ class view implements renderable, templatable {
 
         $data = new stdClass();
 
-        $data->title = $this->collaborate->title;
-        // Moodle handles processing of std intro field.
-        $data->body = format_module_intro('collaborate',
-                $this->collaborate, $this->id);
+        $data->heading = $this->collaborate->title;
 
-        // Set up the user page URLs.
-        $a = new \moodle_url('/mod/collaborate/showpage.php', ['cid' => $this->collaborate->id, 'page' => 'a']);
-        $b = new \moodle_url('/mod/collaborate/showpage.php', ['cid' => $this->collaborate->id, 'page' => 'b']);
-        $data->url_a = $a->out(false);
-        $data->url_b = $b->out(false);
+        // $data->user = 'User: ' . strtoupper($this->page);
+        $data->user = get_string('student_name', 'mod_collaborate', strtoupper($this->page));
+
+        // Get the content from the database.
+        $content = ($this->page == 'a') ? $this->collaborate->instructionsa : $this->collaborate->instructionsb;
+
+        $filearea = 'instructions' . $this->page;
+        $content = file_rewrite_pluginfile_urls(
+            $content,
+            'pluginfile.php',
+            $this->context->id,
+            'mod_collaborate',
+            $filearea,
+            $this->collaborate->id
+        );
+
+        // Run the content through format_text to enable streaming video etc.
+        $formatoptions = new stdClass;
+        $formatoptions->overflowdiv = true;
+        $formatoptions->context = $this->context;
+        $format = ($this->page == 'a') ? $this->collaborate->instructionsaformat : $this->collaborate->instructionsbformat;
+        $data->body = format_text($content, $format, $formatoptions);
+
+        // Get a return url back to view page.
+        $urlv = new \moodle_url('/mod/collaborate/view.php', ['id' => $this->cm->id]);
+        $data->url_view = $urlv->out(false);
 
         return $data;
     }
